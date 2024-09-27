@@ -1,25 +1,60 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { Calendar, momentLocalizer } from "react-big-calendar";
+import moment from "moment";
+import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import StupidButtons from "./StupidButtons";
+
+import "./App.css";
+import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+
+const localizer = momentLocalizer(moment);
+const DnDCalendar = withDragAndDrop(Calendar);
+
+class App extends Component {
+  state = {
+    events: [
+      {
+        start: moment().toDate(),
+        end: moment().add(1, "days").toDate(),
+        title: "Some title",
+      },
+    ],
+  };
+
+  onEventResize = (data) => {
+    const { start, end } = data;
+
+    this.setState((state) => {
+      state.events[0].start = start;
+      state.events[0].end = end;
+      return { events: [...state.events] };
+    });
+  };
+
+  onEventDrop = (data) => {
+    console.log(data);
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <DnDCalendar
+          defaultDate={moment().toDate()}
+          defaultView="month"
+          events={this.state.events}
+          localizer={localizer}
+          onEventDrop={this.onEventDrop}
+          onEventResize={this.onEventResize}
+          resizable
+          style={{ height: "100vh" }}
+        />
+              <StupidButtons />
+      </div>
+
+    );
+  }
 }
 
 export default App;

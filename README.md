@@ -1,3 +1,27 @@
+# meal plan and consume!  
+
+This project lets your plan cooking of large recipes and tracks the age in the fridge.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
